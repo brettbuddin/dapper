@@ -45,23 +45,24 @@ func (r *Router) Root(handler func(*Responder, *Request)) {
 }
 
 func (r *Router) Get(pattern string, handler func(*Responder, *Request)) {
-    exp := r.matcherPattern(pattern)
-    r.routes = append(r.routes, &route{method: "GET", matcher: exp, handler: handler})
+    r.addRoute("GET", pattern, handler)
 }
 
 func (r *Router) Post(pattern string, handler func(*Responder, *Request)) {
-    exp := r.matcherPattern(pattern)
-    r.routes = append(r.routes, &route{method: "POST", matcher: exp, handler: handler})
+    r.addRoute("POST", pattern, handler)
 }
 
 func (r *Router) Put(pattern string, handler func(*Responder, *Request)) {
-    exp := r.matcherPattern(pattern)
-    r.routes = append(r.routes, &route{method: "PUT", matcher: exp, handler: handler})
+    r.addRoute("PUT", pattern, handler)
 }
 
 func (r *Router) Delete(pattern string, handler func(*Responder, *Request)) {
+    r.addRoute("DELETE", pattern, handler)
+}
+
+func (r *Router) addRoute(method, pattern string, handler func(*Responder, *Request)) {
     exp := r.matcherPattern(pattern)
-    r.routes = append(r.routes, &route{method: "DELETE", matcher: exp, handler: handler})
+    r.routes = append(r.routes, &route{method: method, matcher: exp, handler: handler})
 }
 
 func (r *Router) matcherPattern(pattern string) *regexp.Regexp {
