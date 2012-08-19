@@ -2,17 +2,18 @@ package main
 
 import (
     "net/http"
+    "github.com/brettbuddin/dapper"
 )
 
 func main() {
-    router := NewRouter()
+    router := dapper.NewRouter()
 
     router.Get("stream", OtherHandler)
 
     http.ListenAndServe(":4000", router)
 }
 
-func StreamHandler(resp *Responder, req *Request) {
+func StreamHandler(resp *dapper.Responder, req *dapper.Request) {
     messages := make(chan []byte)
 
     go func() {
