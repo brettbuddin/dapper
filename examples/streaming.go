@@ -7,15 +7,9 @@ import (
 func main() {
     router := NewRouter()
 
-    router.Root(HomeHandler)
-    router.Get("stream", StreamHandler)
+    router.Get("stream", OtherHandler)
 
     http.ListenAndServe(":4000", router)
-}
-
-func HomeHandler(resp *Responder, req *Request) {
-    panic("yoyoooyyoy")
-    resp.Respond([]byte("home page"), 200)
 }
 
 func StreamHandler(resp *Responder, req *Request) {
@@ -23,10 +17,9 @@ func StreamHandler(resp *Responder, req *Request) {
 
     go func() {
         for {
-            messages <- []byte("Test")
+            messages <- []byte("howdy!")
         }
     }()
 
     resp.Stream(messages)
-    //resp.Respond([]byte(params["filename"]), 200)
 }
