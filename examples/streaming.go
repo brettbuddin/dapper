@@ -8,7 +8,7 @@ import (
 func main() {
     router := dapper.NewRouter()
 
-    router.Get("stream", OtherHandler)
+    router.Get("stream", StreamHandler)
 
     http.ListenAndServe(":4000", router)
 }
